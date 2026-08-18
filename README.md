@@ -58,6 +58,7 @@ which resolves to `/home/eddy/dbt-postgres-airflow/dbt/my_project` — missing t
 2. **manifest.json doesn't exist yet regardless**, because you haven't run dbt compile (or dbt run) against that project to generate it.
 
 **fix**
+
 Run this on your machine (WSL2) to confirm the project path and generate the manifest:
 
 ```ls /home/eddy/projects/elt/dbt-postgres-airflow/dbt/my_project
@@ -69,7 +70,7 @@ Run this on your machine (WSL2) to confirm the project path and generate the man
 
 3.**concurrent-collision issue**
 
-![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/airflow_dag_error.png)
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/airflow%20failure.png)
 
 ```**Database Error** in model my_second_dbt_model
   relation "my_second_dbt_model" already exists```
@@ -90,6 +91,7 @@ bash_command=(
 )
 ```
 2. Simpler and clearer, split by resource type:
+
 ```
 if node_info["resource_type"] == "test":
     dbt_command = f"dbt test --select {node_info['name']}"
@@ -99,8 +101,8 @@ else:
 dbt_tasks[node_id] = BashOperator(
     task_id=".".join([node_info["resource_type"], node_info["package_name"], node_info["name"]]),
     bash_command=f"cd {dbt_path} && /home/eddy/.pyenv/versions/demo_dbt/bin/dbt {dbt_command.split(' ', 1)[1]}",
-)```
-
+)
+```
   
 	
 	
