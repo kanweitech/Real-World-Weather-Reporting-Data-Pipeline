@@ -12,7 +12,7 @@ This project simulates a real-world ELT pattern: raw weather observations are ex
 | **Layer**       |  	**Tool**         |
 | --------------- |:--------------------:|
 | Language        |  Python 3.11         |
-| Data Source     |  Open Weather API    |
+| Data Source     |  WeatherStack API    |
 | Database        |  PostgreSQL          |
 | Transformation  |  dbt                 |
 | Orchestration   |  Apache Airflow      |
@@ -20,15 +20,15 @@ This project simulates a real-world ELT pattern: raw weather observations are ex
 
 **DBT initialized, Debugged and Running**
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/dbt_project_started.png)
 
 **Dockerized PostgreSQL Database**
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/postgres_containers_running.png)
 
 **Airflow initialized**
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/airflow_initialized.png)
 
 
 - I created a `dbt-orchestrator.py` file in the dags folder to define an Airflow DAG
@@ -39,7 +39,7 @@ This project simulates a real-world ELT pattern: raw weather observations are ex
 
 ### ISSUES
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/airflow_dag_error.png)
 
 1. **Wrong path**. Your DAG file lives at:
 
@@ -66,6 +66,42 @@ Run this on your machine (WSL2) to confirm the project path and generate the man
  cd /home/eddy/projects/elt/dbt-postgres-airflow/dbt/my_project
 /home/eddy/.pyenv/versions/demo_dbt/bin/dbt compile
 ```
+
+3.**concurrent-collision issue**
+
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/airflow_dag_error.png)
+
+```**Database Error** in model my_second_dbt_model
+  relation "my_second_dbt_model" already exists```
+
+**Root cause confirmed:**
+every task calls plain dbt run, which rebuilds all models every time. my_second_dbt_model is defined as a view, and by the time this particular task's dbt run reached step 2, a table/view named my_second_dbt_model already existed in Postgres.
+
+This is a design bug in the DAG, not an environment/WSL2/OOM issue. It'll keep happening intermittently depending on timing.
+
+**The fix**
+
+1. scope each task's dbt command to only its own node, so tasks stop redundantly rebuilding the whole project and colliding with each other:
+```
+bash_command=(
+    f"cd {dbt_path} && "
+    f"/home/eddy/.pyenv/versions/demo_dbt/bin/dbt {node_info['resource_type'] if node_info['resource_type']=='test' else 'run'} "
+    f"--select {node_info['name']}"
+)
+```
+2. Simpler and clearer, split by resource type:
+```
+if node_info["resource_type"] == "test":
+    dbt_command = f"dbt test --select {node_info['name']}"
+else:
+    dbt_command = f"dbt run --select {node_info['name']}"
+
+dbt_tasks[node_id] = BashOperator(
+    task_id=".".join([node_info["resource_type"], node_info["package_name"], node_info["name"]]),
+    bash_command=f"cd {dbt_path} && /home/eddy/.pyenv/versions/demo_dbt/bin/dbt {dbt_command.split(' ', 1)[1]}",
+)```
+
+  
 	
 	
 	
