@@ -1,6 +1,7 @@
 import os
 import logging
 import requests
+import psycopg2
 from dotenv import load_dotenv
 
 # Set up logging
@@ -21,5 +22,46 @@ def fetch_data():
         logger.error(f"API request error: {e}", exc_info=True)
         raise
 
+def connect_to_db():
+    logger.info("connecting to the PostgreSQL database.")
+    try:
+        conn = psycopg2.connect(
+            host = "localhost",
+            port = 5000,
+            dbname = "dw",
+            user = "dw_user",
+            password = "dw_password"
+        )
+        logger.info("Database connection is established.")
+        return conn
+    except psycopg2.error as e:
+        logger.error(f"Database connection failed: {e}", exc_info=True)
+        raise
+
+def create_schema_table(conn):
+    logger.info("Creating schema and table if not exist...")
+    try:
+        cursor = conn.cursor()
+        cursor.execute("""
+            CREATE SCHEMA IF NOT EXISTS dev;
+            CREATE TABLE IF NOT EXISTS dev.weather_report (
+                id SERIAL PRIMARY KEY,
+                city TEXT,
+                temperature FLOAT,
+                weather_description TEXT,
+                wind_speed FLOAT,
+                time TIMESTAMP,
+                inserted_at TIMESTAMP DEFAULT NOW(),
+                utc_offset TEXT
+            );
+        """)
+        conn.commit()
+        logger.info("Schema and table ensured.")
+    except psycopg2.Error as e:
+        logger.error(f"Failed to create schema or table: {e}", exc_info=True)
+        raise
+
 if __name__ == "__main__":
-    fetch_data()
+    #fetch_data()
+    conn = connect_to_db()
+    create_schema_table(conn)
