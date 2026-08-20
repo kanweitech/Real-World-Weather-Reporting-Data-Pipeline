@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 def fetch_data():
-    load_dotenv()
+    load_dotenv() 
     API_KEY = os.getenv("WEATHERSTACK_API_KEY")
     URL = f"http://api.weatherstack.com/current?access_key={API_KEY}&query=New York"
     logger.info("Fetching weather data from weatherstack API...")
