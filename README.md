@@ -19,6 +19,7 @@ This project simulates a real-world ELT pattern: raw weather observations are ex
 | Containerization|  Docker              |
 
 **DBT initialized, Debugged and Running**
+- Used a **PostgreSQL** connector to declare source data in the **PostgreSQL** database
 
 ![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/dbt_project_started.png)
 
@@ -30,8 +31,26 @@ This project simulates a real-world ELT pattern: raw weather observations are ex
 
 ![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/airflow_initialized.png)
 
+**Define task dependencies based on dbt model dependencies**
+- I created a `dbt-orchestrator.py` file in the dags folder to define an Airflow DAG to orchestrate the all task of the model.
 
-- I created a `dbt-orchestrator.py` file in the dags folder to define an Airflow DAG
+### Extraction
+
+- Extracted Live Real-time weather data from WeatherStack API using **requests** and **python-dotenv** libraries in `helper_functions.py` file
+
+### Database Connection
+
+- Connected to the **PostgreSQL** database using **psycopg2-binary** library in `helper_functions.py` file
+### Data Modelling
+
+**Schema and Table already existing in PostgreSQL**
+- Performed a **DDL(Data Definition Language)** command to create the database object(schema and table).
+
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/airflow_initialized.png)
+
+- Performed a **DML(Data Manipulation Language)** command to insert data from **WeatherStack API** into the existing **PosrgreSQL** database.
+
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/airflow_initialized.png)
 
 
 
@@ -88,8 +107,7 @@ bash_command=(
     f"cd {dbt_path} && "
     f"/home/eddy/.pyenv/versions/demo_dbt/bin/dbt {node_info['resource_type'] if node_info['resource_type']=='test' else 'run'} "
     f"--select {node_info['name']}"
-)
-```
+)```
 2. Simpler and clearer, split by resource type:
 
 ```
@@ -101,8 +119,7 @@ else:
 dbt_tasks[node_id] = BashOperator(
     task_id=".".join([node_info["resource_type"], node_info["package_name"], node_info["name"]]),
     bash_command=f"cd {dbt_path} && /home/eddy/.pyenv/versions/demo_dbt/bin/dbt {dbt_command.split(' ', 1)[1]}",
-)
-```
+)```
   
 	
 	
