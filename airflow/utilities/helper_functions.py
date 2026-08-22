@@ -95,14 +95,20 @@ def insert_records(conn, data):
         logger.error(f"Error inserting data into the database: {e}", exc_info=True)
         raise
 
-
-if __name__ == "__main__":
+def main():
     try:
+        logger.info("Starting weather data ETL process...")
         data = fetch_data()
         conn = connect_to_db()
         create_schema_table(conn)
         insert_records(conn, data)
     except Exception as e:
-        import traceback
-        print("=== SCRIPT CRASHED ===")
-        traceback.print_exc()
+        logger.error(f"An error occurred during execution: {e}", exc_info=True)
+    finally:
+        if 'conn' in locals():
+            conn.close()
+            logger.info("Database connection closed")
+
+
+if __name__ == "__main__":
+    main()
