@@ -18,5 +18,7 @@ with DAG(
 ) as dag:
     fetch_weather_task = PythonOperator(
         task_id='ingest_weather_data',
-        python_callable=main
+        python_callable=main,
+        retries=2,
+        retry_delay=pendulum.duration(minutes=2),
     )
