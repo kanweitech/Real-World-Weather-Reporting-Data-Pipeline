@@ -32,12 +32,21 @@ This project simulates a real-world ELT pattern: raw weather observations are ex
 ![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/airflow_initialized.png)
 
 **Define task dependencies based on dbt model dependencies**
-- The `dbt-orchestrator.py` file in the dags folder is scheduler used to define an Airflow DAG that orchestrates the dbt model so that tables can created and updated at a certain frequency.
+- The `dbt-orchestrator.py` file in the dags folder is a scheduler used to define an Airflow DAG that orchestrates the dbt model so that tables can created and updated at a certain frequency.
 - Airflow's bitshift operator was implemented to define dependency chain so that:
 ```dbt_tasks[upstream_node] >> dbt_tasks[node_id]``` upstream tasks comes before the downstream tasks
 
-- We can also use Airflow to schedule triggering API requests for ingesting live data into the database. 
+- The `api-orchestrator.py` file is a scheduler used to define an Airflow DAG that triggers API requests for ingesting live data into the database. 
 
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/data_fetch_daily_dag_persisted.png)
+
+- DAG running successfully
+
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/data_fetch_daily_dag_persisted.png)
+
+- Weather data persisted in the database
+
+- The `sources.yml` file references our database and schema
 ### Extraction
 
 - Extracted Live Real-time weather data from WeatherStack API using **requests** and **python-dotenv** libraries in `helper_functions.py` file

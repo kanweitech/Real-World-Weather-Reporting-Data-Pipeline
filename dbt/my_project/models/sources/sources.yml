@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: weatherstack
+    description: "Development schema with raw weather data"
+    schema: dev
+    database: dw
+    tables:
+      - name: weather_report
+        description: "Raw weather report ingested from Weatherstack API"
+        columns:
+          - name: id
+            description: "Primary key"
+          - name: city
+            description: "City name for the weather report"
+          - name: temperature
+            description: "Temperature in Celsius"
+          - name: weather_description
+            description: "Description of the weather conditions"
+          - name: wind_speed
+            description: "Wind speed in km/h"
+          - name: time
+            description: "Reported local time for the weather data"
+          - name: inserted_at
+            description: "Timestamp when the record was inserted into the database"
+          - name: utc_offset
+            description: "UTC offset for the reported local time" 
