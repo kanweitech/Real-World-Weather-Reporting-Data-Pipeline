@@ -19,7 +19,6 @@ This project simulates a real-world ELT pattern: raw weather observations are ex
 | Containerization|  Docker              |
 
 **DBT initialized, Debugged and Running**
-- Used a **PostgreSQL** connector to declare source data in the **PostgreSQL** database
 
 ![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/dbt_project_started.png)
 
@@ -34,7 +33,8 @@ This project simulates a real-world ELT pattern: raw weather observations are ex
 **Define task dependencies based on dbt model dependencies**
 - The `dbt-orchestrator.py` file in the dags folder is a scheduler used to define an Airflow DAG that orchestrates the dbt model so that tables can created and updated at a certain frequency.
 - Airflow's bitshift operator was implemented to define dependency chain so that:
-```dbt_tasks[upstream_node] >> dbt_tasks[node_id]``` upstream tasks comes before the downstream tasks
+```dbt_tasks[upstream_node] >> dbt_tasks[node_id]``` 
+upstream tasks comes before the downstream tasks
 
 - The `api-orchestrator.py` file is a scheduler used to define an Airflow DAG that triggers API requests for ingesting live data into the database. 
 
@@ -65,6 +65,17 @@ This project simulates a real-world ELT pattern: raw weather observations are ex
 
 ![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/airflow_initialized.png)
 
+**Buiding the dbt models**
+
+1. Incremental loading strategies implemented in the mart
+- **Delete and insert.**
+    - I'm running the `delete insert()` hook before I build the model in `weather_del_ins.sql` so that I can check if the table exist so that I can truncate the records and overwrite with new records
+
+- **Merge and insert.**
+
+**dbt models run completed successfully**
+
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/airflow_initialized.png)
 
 
 

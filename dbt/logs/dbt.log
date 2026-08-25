@@ -95,3 +95,35 @@ Happy modeling!
 [0m21:32:10.940903 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7a4af4b142e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7a4af3073a30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7a4af355fbe0>]}
 [0m21:32:10.954556 [debug] [MainThread]: Flushing usage events
 [0m21:32:11.836144 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m23:16:41.458059 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x755356ee03d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x755355784cd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x755355784c70>]}
+
+
+============================== 23:16:41.526146 | 62dc463b-c57b-4e79-875a-0e9ce90b5544 ==============================
+[0m23:16:41.526146 [info ] [MainThread]: Running with dbt=1.12.2
+[0m23:16:41.555662 [debug] [MainThread]: running dbt with arguments {'cache_selected_only': 'False', 'write_json': 'True', 'invocation_command': 'dbt run', 'maximum_seed_size_mib': '1', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'send_anonymous_usage_stats': 'True', 'warn_error': 'None', 'introspect': 'True', 'debug': 'False', 'empty': 'False', 'use_colors': 'True', 'profiles_dir': '/home/eddy/.dbt', 'target_path': 'None', 'indirect_selection': 'eager', 'quiet': 'False', 'hints_enabled': 'True', 'printer_width': '80', 'version_check': 'True', 'fail_fast': 'False', 'log_cache_events': 'False', 'log_path': 'logs', 'static_parser': 'True', 'no_print': 'None', 'partial_parse': 'True', 'log_format': 'default', 'use_experimental_parser': 'False'}
+[0m23:16:41.564800 [error] [MainThread]: [[31mERROR[0m]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/eddy/projects/elt/dbt-postgres-airflow/dbt/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m23:16:41.604764 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 3.6761243, "process_in_blocks": "106440", "process_kernel_time": 6.449002, "process_mem_max_rss": "104012", "process_out_blocks": "8", "process_user_time": 13.425994}
+[0m23:16:41.616139 [debug] [MainThread]: Command `dbt run` failed at 23:16:41.613681 after 3.69 seconds
+[0m23:16:41.622568 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x755356ee03d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x755355785480>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x755355784cd0>]}
+[0m23:16:41.625498 [debug] [MainThread]: Flushing usage events
+[0m23:16:42.901375 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m23:18:40.198307 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7eeea5f203d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7eeea47c0cd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7eeea47c0c70>]}
+
+
+============================== 23:18:41.246328 | 5d85286a-947c-4124-b2f4-0b07dd0a32c4 ==============================
+[0m23:18:41.246328 [info ] [MainThread]: Running with dbt=1.12.2
+[0m23:18:41.268986 [debug] [MainThread]: running dbt with arguments {'cache_selected_only': 'False', 'version_check': 'True', 'quiet': 'False', 'fail_fast': 'False', 'write_json': 'True', 'partial_parse': 'True', 'debug': 'False', 'profiles_dir': '/home/eddy/.dbt', 'hints_enabled': 'True', 'introspect': 'True', 'maximum_seed_size_mib': '1', 'invocation_command': 'dbt run', 'indirect_selection': 'eager', 'empty': 'False', 'target_path': 'None', 'no_print': 'None', 'use_experimental_parser': 'False', 'send_anonymous_usage_stats': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'static_parser': 'True', 'log_cache_events': 'False', 'printer_width': '80', 'warn_error': 'None', 'log_format': 'default', 'use_colors': 'True', 'log_path': 'logs'}
+[0m23:18:41.299029 [error] [MainThread]: [[31mERROR[0m]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/eddy/projects/elt/dbt-postgres-airflow/dbt/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m23:18:41.348547 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 3.4946527, "process_in_blocks": "65752", "process_kernel_time": 9.097006, "process_mem_max_rss": "103240", "process_out_blocks": "8", "process_user_time": 13.509243}
+[0m23:18:41.361993 [debug] [MainThread]: Command `dbt run` failed at 23:18:41.361110 after 3.51 seconds
+[0m23:18:41.374764 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7eeea5f203d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7eeea47c1480>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7eeea47c0cd0>]}
+[0m23:18:41.382398 [debug] [MainThread]: Flushing usage events
+[0m23:18:44.949504 [debug] [MainThread]: An error was encountered while trying to flush usage events

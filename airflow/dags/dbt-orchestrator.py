@@ -30,7 +30,9 @@ with open(manifest_path) as f:
 with DAG(
     dag_id="dbt_orchestrator",  # This ID shows up in the Airflow UI
     start_date=pendulum.datetime(2026, 8, 17, tz="UTC"),  # Fixed start date (must not be dynamic)
+    schedule='@hourly',
     catchup=False,  # Don't backfill past runs
+    max_active_tasks=1,
 ) as dag:
 
     # Dictionary to hold dynamically created tasks
@@ -62,6 +64,8 @@ with DAG(
                 f"cd {dbt_path} && "  # Navigate to your dbt project
                 f"{DBT_BIN} {dbt_subcommand.split(' ', 1)[1]}"  # Run only this node
             ),
+            retries=2,
+            retry_delay=pendulum.duration(seconds=30),
         )
 
     # Define task dependencies based on dbt model dependencies
