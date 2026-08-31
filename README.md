@@ -75,10 +75,16 @@ upstream tasks comes before the downstream tasks
 
 **dbt models run completed successfully**
 
-![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/airflow_initialized.png)
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/dbt_models_built.png)
 
 
+**Dag Fetching Daily Weather Data Running Successfully**
 
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/data_fetch_daily_dag.png)
+
+**PostgreSQL Persisting Daily Weather Data From Dag Run**
+
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/data_fetch_daily_dag_persisted.png)
 
 ### ISSUES
 
