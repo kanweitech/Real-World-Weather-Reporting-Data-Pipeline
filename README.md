@@ -38,13 +38,6 @@ upstream tasks comes before the downstream tasks
 
 - The `api-orchestrator.py` file is a scheduler used to define an Airflow DAG that triggers API requests for ingesting live data into the database. 
 
-![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/data_fetch_daily_dag_persisted.png)
-
-- DAG running successfully
-
-![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/data_fetch_daily_dag_persisted.png)
-
-- Weather data persisted in the database
 
 - The `sources.yml` file references our database and schema
 ### Extraction
@@ -59,11 +52,11 @@ upstream tasks comes before the downstream tasks
 **Schema and Table already existing in PostgreSQL**
 - Performed a **DDL(Data Definition Language)** command to create the database object(schema and table).
 
-![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/airflow_initialized.png)
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/database_and_schema_created_postgresql.png)
 
 - Performed a **DML(Data Manipulation Language)** command to insert data from **WeatherStack API** into the existing **PosrgreSQL** database.
 
-![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/airflow_initialized.png)
+![alt text](https://github.com/kanweitech/Real-World-Weather-Reporting-Data-Pipeline/blob/main/images/inserted_live_weather_data.png)
 
 **Buiding the dbt models**
 
